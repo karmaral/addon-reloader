@@ -9,17 +9,19 @@ bl_info = {
     "wiki_url": "",
     "category": "Development",
 }
+
 import bpy
 import time
-
 from pathlib import Path
 from bpy_extras.io_utils import ImportHelper
 
 
-#----------------------------------- RELOAD ADDON -----------------------------------    
+#----------------------------------- RELOAD ADDON ----------------------------------- 
+   
 class ReloadAddonOperator(bpy.types.Operator):
     bl_idname = "wm.addon_reload"
     bl_label = "Reload Addon"
+    bl_description = ""
     bl_options = {'REGISTER'}
 
     def clean_path(self, context):
@@ -43,7 +45,7 @@ class ReloadAddonOperator(bpy.types.Operator):
 
     def invoke(self, context, event):
         if context.preferences.addons[__name__].preferences.bookmark == "":
-            bpy.ops.wm.microwave_select_addon_path('INVOKE_DEFAULT')
+            bpy.ops.wm.addon_reloader_select_addon_path('INVOKE_DEFAULT')
             self.execute(context)
             return {'FINISHED'}
         else:
@@ -52,9 +54,12 @@ class ReloadAddonOperator(bpy.types.Operator):
         
 
 #----------------------------------- FILEBROWSER -----------------------------------
+
 class SelectAddonPathFileBrowser(bpy.types.Operator, ImportHelper):
     bl_idname = "wm.addon_reloader_select_addon_path"
     bl_label = "Select Addon Path"
+    bl_description = ""
+
     
     filter_glob: bpy.props.StringProperty( default='*py', options={'HIDDEN'} )
 
@@ -64,6 +69,7 @@ class SelectAddonPathFileBrowser(bpy.types.Operator, ImportHelper):
         return {'FINISHED'}
 
 #----------------------------------- PANEL -----------------------------------
+
 class AddonReloaderPanel(bpy.types.Panel):
     bl_label = "Addon Reloader"
     bl_idname = "TEXT_PT_addon_reloader"
@@ -95,7 +101,9 @@ class AddonReloaderPanel(bpy.types.Panel):
 
         layout.operator("screen.userpref_show",text="", icon='PREFERENCES')
         
-#----------------------------------- PREFERENCES -----------------------------------  
+                
+#----------------------------------- MENU (templates) -----------------------------------
+
 class AddonReloaderPreferences(bpy.types.AddonPreferences):
     bl_idname = __name__
 
@@ -128,7 +136,6 @@ def register():
     for c in classes:
         bpy.utils.register_class(c)
         
-
 
 def unregister():
     for c in classes:
