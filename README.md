@@ -5,7 +5,7 @@ A quick reloader for addon development inside Blender.
 The addon works in the ``Dev`` panel inside the **Text Editor**
 You only need to locate your addon's filepath, and then it should be set.
 
-![](preview.jpg)
+![](preview.JPG)
 
 ### Disclaimer
 This is a core functionality of a *suite* of sorts I'm working on. I probably won't update this particular addon until I release the bundled version, which will probably get more quality-of-life features. 
